@@ -1,0 +1,48 @@
+name-template: "$RESOLVED_VERSION"
+tag-template: "$RESOLVED_VERSION"
+categories:
+  - title: "🚀 Features"
+    labels:
+      - "Story"
+  - title: "🐛 Bug Fixes"
+    labels:
+      - "defect"
+      - "bug"
+  - title: "🧰 Maintenance"
+    labels:
+      - "dependencies"
+      - "Task"
+change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
+change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
+autolabeler:
+  - label: "chore"
+    branch:
+      - '/chore\/.+/'
+  - label: "bug"
+    branch:
+      - '/bug\/.+/'
+  - label: "feature"
+    branch:
+      - '/feature\/.+/'
+version-resolver:
+  # We're using the "bump-*" labelling for PRs, as Dependabot uses "major", "minor" and "patch" labels (when
+  # they exist in the repository) to denote a major/minor/patch bump in a dependency. And, generally speaking,
+  # just because dependencies are major bump, does not mean our release notes NEED to be major releases.
+  # See here: https://github.com/dependabot/dependabot-core/issues/2455
+  major:
+    labels:
+      - "bump-major"
+  minor:
+    labels:
+      - "bump-minor"
+  patch:
+    labels:
+      - "bump-patch"
+  default: patch
+exclude-labels:
+  # In case we ever want to keep the release notes tidy from small PR changes
+  - "skip-changelog"
+template: |
+  ## What's Changed
+
+  $CHANGES
