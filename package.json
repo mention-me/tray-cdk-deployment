@@ -1,7 +1,7 @@
 {
   "name": "@mention-me/tray-cdk-deployment",
   "description": "A GitHub Action to deploy Tray.ai CDK connectors",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/mention-me/tray-cdk-deployment.git"
