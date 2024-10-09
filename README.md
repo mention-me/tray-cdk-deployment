@@ -32,12 +32,14 @@ with:
 ## Development
 
 To develop this action, you can use the following commands:
+
 - `npm run test` - Run the tests
 - `npm run bundle` - Update the distribution files (`./dist`). This is required before merging changes.
 
 ## Releasing
 
 To release a new version of this action, you can do the following:
+
 1. Update the version in `package.json` (and run `npm install` to update the lock file)
 2. Run `npm run bundle` to update the distribution files
 3. Commit the changes
