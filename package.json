@@ -18,7 +18,7 @@
     "@typescript-eslint/eslint-plugin": "^8.6.0",
     "@typescript-eslint/parser": "^8.6.0",
     "@vercel/ncc": "^0.38.1",
-    "eslint": "^8.57.0",
+    "eslint": "^9.12.0",
     "eslint-plugin-jest": "^28.8.3",
     "eslint-plugin-jsonc": "^2.16.0",
     "eslint-plugin-prettier": "^5.2.1",
@@ -32,7 +32,7 @@
     "bundle": "npm run format:write && npx ncc build src/index.ts -o dist --source-map --license licenses.txt",
     "format:write": "npx prettier --write .",
     "format:check": "npx prettier --check .",
-    "lint:static-analysis": "npx eslint . -c .eslintrc.yml",
+    "lint:static-analysis": "npx eslint . -c eslint.config.mjs",
     "lint:types": "tsc --noEmit",
     "test": "npx jest",
     "test:coverage": "npm run test -- --coverage"
