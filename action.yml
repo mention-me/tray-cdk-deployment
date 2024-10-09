@@ -1,0 +1,38 @@
+name: Tray CDK Deployment
+description: "A GitHub Action to deploy Tray.ai CDK connectors"
+author: "Mention Me"
+
+branding:
+  icon: "code"
+  color: "black"
+
+inputs:
+  apiKey:
+    description: "The API key to use for deployment."
+    required: true
+  region:
+    description: "The region to deploy the connector to. Options: us1, eu1, apac1."
+    required: true
+  executable:
+    description: "The path to the Tray CDK executable. If not changed, the action will use the global Tray CDK executable."
+    default: "tray-cdk"
+    required: true
+  path:
+    description: "The path to the connector to deploy. If not provided, the action will look for a connector in the root of the repository."
+    required: false
+
+outputs:
+  name:
+    description: "The name of the deployed connector."
+  version:
+    description: "The version of the deployed connector."
+  buildPath:
+    description: "The path to the built connector (if successful)."
+  deploymentId:
+    description: "The ID of the deployment which was created (if successful)."
+  successful:
+    description: "Whether the deployment was completed successfully."
+
+runs:
+  using: node20
+  main: dist/index.js

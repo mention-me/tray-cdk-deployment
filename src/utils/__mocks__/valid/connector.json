@@ -1,0 +1,10 @@
+{
+  "name": "some-connector",
+  "version": "1.0",
+  "title": "Connector",
+  "description": "",
+  "service": { "name": "some-service", "version": "1" },
+  "tags": ["service"],
+  "isTrigger": false,
+  "rawHttp": { "enabled": true }
+}
