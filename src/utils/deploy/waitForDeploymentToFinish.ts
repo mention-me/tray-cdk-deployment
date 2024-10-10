@@ -7,6 +7,10 @@ export async function waitForDeploymentToFinish(
   attempts = 120,
   waitTime = 2000,
 ): ReturnType<typeof getDeploymentStatus> {
+  core.info(
+    `Waiting for deployment of ${connectorName} (${connectorVersion}) in ${region} to finish...`,
+  );
+
   for (let i = 1; i <= attempts; i++) {
     const status = await getDeploymentStatus(
       region,
@@ -24,10 +28,12 @@ export async function waitForDeploymentToFinish(
       return status;
     }
 
+    core.info(`Attempt ${i} of ${attempts}: the status is "${status.status}".`);
+
     await new Promise((resolve) => setTimeout(resolve, waitTime));
   }
 
-  core.debug(
+  core.info(
     `Deployment timed out after ${attempts} attempts (with a ${waitTime / 1000} second wait time).`,
   );
 
