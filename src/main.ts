@@ -36,9 +36,9 @@ export async function run(): Promise<void> {
     const status = await waitForDeploymentToFinish(deployment);
 
     if (status.isDeployed) {
-      core.info("Deployment successful!");
+      core.info(`Deployment of ${name} (${version}) in ${region} successful!`);
     } else if (status.hasFailed) {
-      core.error("Deployment failed!");
+      core.error(`Deployment of ${name} (${version}) in ${region} failed!`);
     }
 
     core.setOutput("successful", status.isDeployed && !status.hasFailed);

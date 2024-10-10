@@ -19,6 +19,11 @@ export async function startDeployment(
 ): Promise<Deployment> {
   const apiKey = core.getInput("apiKey", { required: true });
   const baseUrl = getApiBaseUrl(region);
+
+  core.info(
+    `Starting a deployment of ${connectorName} (${connectorVersion}) in ${region}`,
+  );
+
   const encodedBuild = fs.readFileSync(`${buildPath}/connector.zip`, {
     encoding: "base64",
   });
@@ -42,16 +47,28 @@ export async function startDeployment(
   core.debug(`Deployment response: ${JSON.stringify(response.data)}`);
 
   if (response.status !== 200) {
+    core.error(
+      `Failed to start deployment. The error code returned was ${response.status}`,
+    );
+
     throw new Error(
       `Failed to start deployment: ${JSON.stringify(response.data)}`,
     );
   }
 
   if (!response.data?.id) {
+    core.error(
+      `Failed to start deployment. The response did not contain a deployment ID`,
+    );
+
     throw new Error(
       `Unable to read deployment ID from response: ${response.data}`,
     );
   }
+
+  core.info(
+    `Deployment of ${connectorName} (${connectorVersion}) in ${region} started successfully. Deployment ID: ${response.data.id}`,
+  );
 
   return {
     region,

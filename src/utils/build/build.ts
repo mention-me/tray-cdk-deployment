@@ -20,6 +20,8 @@ export async function build(
   }
 
   try {
+    core.info(`Running build command at path: ${path}`);
+
     await exec.exec(`${executable} connector build`, [], {
       cwd: path,
       silent: true,

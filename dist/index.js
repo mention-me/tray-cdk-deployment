@@ -29199,10 +29199,10 @@ async function run() {
         core.setOutput("deploymentId", deployment.deploymentId);
         const status = await (0, waitForDeploymentToFinish_1.waitForDeploymentToFinish)(deployment);
         if (status.isDeployed) {
-            core.info("Deployment successful!");
+            core.info(`Deployment of ${name} (${version}) in ${region} successful!`);
         }
         else if (status.hasFailed) {
-            core.error("Deployment failed!");
+            core.error(`Deployment of ${name} (${version}) in ${region} failed!`);
         }
         core.setOutput("successful", status.isDeployed && !status.hasFailed);
     }
@@ -29262,6 +29262,7 @@ async function build(executable, path) {
         fs.rmSync(`${path}/.tray/`, { recursive: true, force: true });
     }
     try {
+        core.info(`Running build command at path: ${path}`);
         await exec.exec(`${executable} connector build`, [], {
             cwd: path,
             silent: true,
@@ -29456,6 +29457,7 @@ const axios_1 = __importDefault(__nccwpck_require__(8757));
 async function startDeployment(region, connectorName, connectorVersion, buildPath) {
     const apiKey = core.getInput("apiKey", { required: true });
     const baseUrl = (0, getApiBaseUrl_1.getApiBaseUrl)(region);
+    core.info(`Starting a deployment of ${connectorName} (${connectorVersion}) in ${region}`);
     const encodedBuild = fs_1.default.readFileSync(`${buildPath}/connector.zip`, {
         encoding: "base64",
     });
@@ -29471,11 +29473,14 @@ async function startDeployment(region, connectorName, connectorVersion, buildPat
     });
     core.debug(`Deployment response: ${JSON.stringify(response.data)}`);
     if (response.status !== 200) {
+        core.error(`Failed to start deployment. The error code returned was ${response.status}`);
         throw new Error(`Failed to start deployment: ${JSON.stringify(response.data)}`);
     }
     if (!response.data?.id) {
+        core.error(`Failed to start deployment. The response did not contain a deployment ID`);
         throw new Error(`Unable to read deployment ID from response: ${response.data}`);
     }
+    core.info(`Deployment of ${connectorName} (${connectorVersion}) in ${region} started successfully. Deployment ID: ${response.data.id}`);
     return {
         region,
         baseUrl,
@@ -29521,6 +29526,7 @@ exports.waitForDeploymentToFinish = waitForDeploymentToFinish;
 const getDeploymentStatus_1 = __nccwpck_require__(1488);
 const core = __importStar(__nccwpck_require__(2186));
 async function waitForDeploymentToFinish({ region, connectorVersion, connectorName, deploymentId }, attempts = 120, waitTime = 2000) {
+    core.info(`Waiting for deployment of ${connectorName} (${connectorVersion}) in ${region} to finish...`);
     for (let i = 1; i <= attempts; i++) {
         const status = await (0, getDeploymentStatus_1.getDeploymentStatus)(region, connectorName, connectorVersion);
         if (status.deploymentId !== deploymentId) {
@@ -29529,9 +29535,10 @@ async function waitForDeploymentToFinish({ region, connectorVersion, connectorNa
         if (status.isDeployed || status.hasFailed) {
             return status;
         }
+        core.info(`Attempt ${i} of ${attempts}: the status is "${status.status}".`);
         await new Promise((resolve) => setTimeout(resolve, waitTime));
     }
-    core.debug(`Deployment timed out after ${attempts} attempts (with a ${waitTime / 1000} second wait time).`);
+    core.info(`Deployment timed out after ${attempts} attempts (with a ${waitTime / 1000} second wait time).`);
     return {
         status: "Failed",
         isDeployed: false,
