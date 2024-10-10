@@ -1,6 +1,6 @@
 # Tray CDK Deployment
 
-A GitHub Action which can deploy Tray.ai CDK connectors to your Tray.io account.
+A GitHub Action which can deploy Tray (formerly Tray.io, now Tray.ai) CDK connectors to a Tray organisation.
 
 ## Inputs
 
