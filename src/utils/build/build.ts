@@ -24,7 +24,9 @@ export async function build(
 
     await exec.exec(`${executable} connector build`, [], {
       cwd: path,
-      silent: true,
+
+      // We want to see the output of the build command during the build process.
+      silent: false,
     });
   } catch (error) {
     throw new Error(`Unable to run build command. Error was: ${error}`);

@@ -29265,7 +29265,8 @@ async function build(executable, path) {
         core.info(`Running build command at path: ${path}`);
         await exec.exec(`${executable} connector build`, [], {
             cwd: path,
-            silent: true,
+            // We want to see the output of the build command during the build process.
+            silent: false,
         });
     }
     catch (error) {
