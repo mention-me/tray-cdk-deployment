@@ -38,7 +38,7 @@ export async function run(): Promise<void> {
     if (status.isDeployed) {
       core.info(`Deployment of ${name} (${version}) in ${region} successful!`);
     } else if (status.hasFailed) {
-      core.error(`Deployment of ${name} (${version}) in ${region} failed!`);
+      core.setFailed(`Deployment of ${name} (${version}) in ${region} failed!`);
     }
 
     core.setOutput("successful", status.isDeployed && !status.hasFailed);

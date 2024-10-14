@@ -29202,7 +29202,7 @@ async function run() {
             core.info(`Deployment of ${name} (${version}) in ${region} successful!`);
         }
         else if (status.hasFailed) {
-            core.error(`Deployment of ${name} (${version}) in ${region} failed!`);
+            core.setFailed(`Deployment of ${name} (${version}) in ${region} failed!`);
         }
         core.setOutput("successful", status.isDeployed && !status.hasFailed);
     }
@@ -29526,7 +29526,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.waitForDeploymentToFinish = waitForDeploymentToFinish;
 const getDeploymentStatus_1 = __nccwpck_require__(1488);
 const core = __importStar(__nccwpck_require__(2186));
-async function waitForDeploymentToFinish({ region, connectorVersion, connectorName, deploymentId }, attempts = 120, waitTime = 2000) {
+async function waitForDeploymentToFinish({ region, connectorVersion, connectorName, deploymentId }, attempts = 120, waitTime = 4000) {
     core.info(`Waiting for deployment of ${connectorName} (${connectorVersion}) in ${region} to finish...`);
     for (let i = 1; i <= attempts; i++) {
         const status = await (0, getDeploymentStatus_1.getDeploymentStatus)(region, connectorName, connectorVersion);
