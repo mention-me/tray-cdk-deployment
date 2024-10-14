@@ -5,7 +5,7 @@ import { Deployment } from "./startDeployment";
 export async function waitForDeploymentToFinish(
   { region, connectorVersion, connectorName, deploymentId }: Deployment,
   attempts = 120,
-  waitTime = 2000,
+  waitTime = 4000,
 ): ReturnType<typeof getDeploymentStatus> {
   core.info(
     `Waiting for deployment of ${connectorName} (${connectorVersion}) in ${region} to finish...`,
