@@ -1,6 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
+  "extends": ["github>mention-me/.github"],
+  "packageRules": [
+    {
+      "description": "Infra repo: no automerge, all updates need human review",
+      "matchPackageNames": ["*"],
+      "automerge": false
+    }
   ]
 }
