@@ -16,7 +16,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
 
     steps:
       - uses: release-drafter/release-drafter@v7.2.1
@@ -27,7 +27,7 @@ jobs:
 
   check_labels:
     name: Validate Labels
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     needs: update_release
     if: ${{ github.event_name == 'pull_request' }}
     permissions:
